@@ -555,6 +555,557 @@ public readonly version: string;
 ---
 
 
+### ComprehendMedicalSyncSfnTask <a name="ComprehendMedicalSyncSfnTask" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask"></a>
+
+Calls a Medical Comprehend Classification endpoint and parses the result, filters on > 50 % confidence and sets the highest confidence score classification.
+
+Input: "textract_result"."txt_output_location"
+Output:  { "documentType": "AWS_PAYSTUBS" } (example will be at "classification"."documentType")
+
+Example (Python)
+```python
+comprehend_sync_task = tcdk.ComprehendMedicalSyncSfnTask(
+self,
+"Classification",
+integration_pattern=IntegrationPattern.WAIT_FOR_TASK_TOKEN,
+lambda_log_level="DEBUG",
+timeout=Duration.hours(24),
+input=TaskInput.from_object({
+          "Token":
+          JsonPath.task_token,
+          "ExecutionId":
+          JsonPath.string_at('$$.Execution.Id'),
+          "Payload":
+          JsonPath.entire_payload,
+      }),
+result_path="$.classification")
+```
+
+#### Initializers <a name="Initializers" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+new ComprehendMedicalSyncSfnTask(scope: Construct, id: string, props: ComprehendMedicalSyncSfnTaskProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.props">props</a></code> | <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps">ComprehendMedicalSyncSfnTaskProps</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `props`<sup>Required</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps">ComprehendMedicalSyncSfnTaskProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addPrefix">addPrefix</a></code> | Add a prefix to the stateId of this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.bindToGraph">bindToGraph</a></code> | Register this state as part of the given graph. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.toStateJson">toStateJson</a></code> | Return the Amazon States Language object for this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addCatch">addCatch</a></code> | Add a recovery handler for this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addRetry">addRetry</a></code> | Add retry configuration for this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metric">metric</a></code> | Return the given named metric for this Task. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricFailed">metricFailed</a></code> | Metric for the number of times this activity fails. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricHeartbeatTimedOut">metricHeartbeatTimedOut</a></code> | Metric for the number of times the heartbeat times out for this activity. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricRunTime">metricRunTime</a></code> | The interval, in milliseconds, between the time the Task starts and the time it closes. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduled">metricScheduled</a></code> | Metric for the number of times this activity is scheduled. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduleTime">metricScheduleTime</a></code> | The interval, in milliseconds, for which the activity stays in the schedule state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricStarted">metricStarted</a></code> | Metric for the number of times this activity is started. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricSucceeded">metricSucceeded</a></code> | Metric for the number of times this activity succeeds. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTime">metricTime</a></code> | The interval, in milliseconds, between the time the activity is scheduled and the time it closes. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTimedOut">metricTimedOut</a></code> | Metric for the number of times this activity times out. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.next">next</a></code> | Continue normal execution with the given state. |
+
+---
+
+##### `toString` <a name="toString" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `addPrefix` <a name="addPrefix" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addPrefix"></a>
+
+```typescript
+public addPrefix(x: string): void
+```
+
+Add a prefix to the stateId of this state.
+
+###### `x`<sup>Required</sup> <a name="x" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addPrefix.parameter.x"></a>
+
+- *Type:* string
+
+---
+
+##### `bindToGraph` <a name="bindToGraph" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.bindToGraph"></a>
+
+```typescript
+public bindToGraph(graph: StateGraph): void
+```
+
+Register this state as part of the given graph.
+
+Don't call this. It will be called automatically when you work
+with states normally.
+
+###### `graph`<sup>Required</sup> <a name="graph" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.bindToGraph.parameter.graph"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.StateGraph
+
+---
+
+##### `toStateJson` <a name="toStateJson" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.toStateJson"></a>
+
+```typescript
+public toStateJson(): object
+```
+
+Return the Amazon States Language object for this state.
+
+##### `addCatch` <a name="addCatch" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addCatch"></a>
+
+```typescript
+public addCatch(handler: IChainable, props?: CatchProps): TaskStateBase
+```
+
+Add a recovery handler for this state.
+
+When a particular error occurs, execution will continue at the error
+handler instead of failing the state machine execution.
+
+###### `handler`<sup>Required</sup> <a name="handler" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addCatch.parameter.handler"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.IChainable
+
+---
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addCatch.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.CatchProps
+
+---
+
+##### `addRetry` <a name="addRetry" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addRetry"></a>
+
+```typescript
+public addRetry(props?: RetryProps): TaskStateBase
+```
+
+Add retry configuration for this state.
+
+This controls if and how the execution will be retried if a particular
+error occurs.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.addRetry.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.RetryProps
+
+---
+
+##### `metric` <a name="metric" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metric"></a>
+
+```typescript
+public metric(metricName: string, props?: MetricOptions): Metric
+```
+
+Return the given named metric for this Task.
+
+###### `metricName`<sup>Required</sup> <a name="metricName" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metric.parameter.metricName"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metric.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricFailed` <a name="metricFailed" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricFailed"></a>
+
+```typescript
+public metricFailed(props?: MetricOptions): Metric
+```
+
+Metric for the number of times this activity fails.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricFailed.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricHeartbeatTimedOut` <a name="metricHeartbeatTimedOut" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricHeartbeatTimedOut"></a>
+
+```typescript
+public metricHeartbeatTimedOut(props?: MetricOptions): Metric
+```
+
+Metric for the number of times the heartbeat times out for this activity.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricHeartbeatTimedOut.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricRunTime` <a name="metricRunTime" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricRunTime"></a>
+
+```typescript
+public metricRunTime(props?: MetricOptions): Metric
+```
+
+The interval, in milliseconds, between the time the Task starts and the time it closes.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricRunTime.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricScheduled` <a name="metricScheduled" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduled"></a>
+
+```typescript
+public metricScheduled(props?: MetricOptions): Metric
+```
+
+Metric for the number of times this activity is scheduled.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduled.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricScheduleTime` <a name="metricScheduleTime" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduleTime"></a>
+
+```typescript
+public metricScheduleTime(props?: MetricOptions): Metric
+```
+
+The interval, in milliseconds, for which the activity stays in the schedule state.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricScheduleTime.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricStarted` <a name="metricStarted" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricStarted"></a>
+
+```typescript
+public metricStarted(props?: MetricOptions): Metric
+```
+
+Metric for the number of times this activity is started.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricStarted.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricSucceeded` <a name="metricSucceeded" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricSucceeded"></a>
+
+```typescript
+public metricSucceeded(props?: MetricOptions): Metric
+```
+
+Metric for the number of times this activity succeeds.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricSucceeded.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricTime` <a name="metricTime" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTime"></a>
+
+```typescript
+public metricTime(props?: MetricOptions): Metric
+```
+
+The interval, in milliseconds, between the time the activity is scheduled and the time it closes.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTime.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `metricTimedOut` <a name="metricTimedOut" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTimedOut"></a>
+
+```typescript
+public metricTimedOut(props?: MetricOptions): Metric
+```
+
+Metric for the number of times this activity times out.
+
+###### `props`<sup>Optional</sup> <a name="props" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.metricTimedOut.parameter.props"></a>
+
+- *Type:* aws-cdk-lib.aws_cloudwatch.MetricOptions
+
+---
+
+##### `next` <a name="next" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.next"></a>
+
+```typescript
+public next(next: IChainable): Chain
+```
+
+Continue normal execution with the given state.
+
+###### `next`<sup>Required</sup> <a name="next" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.next.parameter.next"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.IChainable
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.filterNextables">filterNextables</a></code> | Return only the states that allow chaining from an array of states. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableEndStates">findReachableEndStates</a></code> | Find the set of end states states reachable through transitions from the given start state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableStates">findReachableStates</a></code> | Find the set of states reachable through transitions from the given start state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.prefixStates">prefixStates</a></code> | Add a prefix to the stateId of all States found in a construct tree. |
+
+---
+
+##### ~~`isConstruct`~~ <a name="isConstruct" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.isConstruct"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+ComprehendMedicalSyncSfnTask.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+###### `x`<sup>Required</sup> <a name="x" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `filterNextables` <a name="filterNextables" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.filterNextables"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+ComprehendMedicalSyncSfnTask.filterNextables(states: State[])
+```
+
+Return only the states that allow chaining from an array of states.
+
+###### `states`<sup>Required</sup> <a name="states" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.filterNextables.parameter.states"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.State[]
+
+---
+
+##### `findReachableEndStates` <a name="findReachableEndStates" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableEndStates"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+ComprehendMedicalSyncSfnTask.findReachableEndStates(start: State, options?: FindStateOptions)
+```
+
+Find the set of end states states reachable through transitions from the given start state.
+
+###### `start`<sup>Required</sup> <a name="start" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableEndStates.parameter.start"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.State
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableEndStates.parameter.options"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.FindStateOptions
+
+---
+
+##### `findReachableStates` <a name="findReachableStates" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableStates"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+ComprehendMedicalSyncSfnTask.findReachableStates(start: State, options?: FindStateOptions)
+```
+
+Find the set of states reachable through transitions from the given start state.
+
+This does not retrieve states from within sub-graphs, such as states within a Parallel state's branch.
+
+###### `start`<sup>Required</sup> <a name="start" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableStates.parameter.start"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.State
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.findReachableStates.parameter.options"></a>
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.FindStateOptions
+
+---
+
+##### `prefixStates` <a name="prefixStates" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.prefixStates"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTask } from 'amazon-textract-idp-cdk-constructs'
+
+ComprehendMedicalSyncSfnTask.prefixStates(root: IConstruct, prefix: string)
+```
+
+Add a prefix to the stateId of all States found in a construct tree.
+
+###### `root`<sup>Required</sup> <a name="root" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.prefixStates.parameter.root"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `prefix`<sup>Required</sup> <a name="prefix" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.prefixStates.parameter.prefix"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.endStates">endStates</a></code> | <code>aws-cdk-lib.aws_stepfunctions.INextable[]</code> | Continuable states of this Chainable. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.id">id</a></code> | <code>string</code> | Descriptive identifier for this chainable. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.startState">startState</a></code> | <code>aws-cdk-lib.aws_stepfunctions.State</code> | First state of this Chainable. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.stateId">stateId</a></code> | <code>string</code> | Tokenized string that evaluates to the state's ID. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.comprehendSyncMedicalCallFunction">comprehendSyncMedicalCallFunction</a></code> | <code>aws-cdk-lib.aws_lambda.IFunction</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.stateMachine">stateMachine</a></code> | <code>aws-cdk-lib.aws_stepfunctions.IStateMachine</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.version">version</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `endStates`<sup>Required</sup> <a name="endStates" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.endStates"></a>
+
+```typescript
+public readonly endStates: INextable[];
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.INextable[]
+
+Continuable states of this Chainable.
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+Descriptive identifier for this chainable.
+
+---
+
+##### `startState`<sup>Required</sup> <a name="startState" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.startState"></a>
+
+```typescript
+public readonly startState: State;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.State
+
+First state of this Chainable.
+
+---
+
+##### `stateId`<sup>Required</sup> <a name="stateId" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.stateId"></a>
+
+```typescript
+public readonly stateId: string;
+```
+
+- *Type:* string
+
+Tokenized string that evaluates to the state's ID.
+
+---
+
+##### `comprehendSyncMedicalCallFunction`<sup>Required</sup> <a name="comprehendSyncMedicalCallFunction" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.comprehendSyncMedicalCallFunction"></a>
+
+```typescript
+public readonly comprehendSyncMedicalCallFunction: IFunction;
+```
+
+- *Type:* aws-cdk-lib.aws_lambda.IFunction
+
+---
+
+##### `stateMachine`<sup>Required</sup> <a name="stateMachine" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.stateMachine"></a>
+
+```typescript
+public readonly stateMachine: IStateMachine;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.IStateMachine
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTask.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+---
+
+
 ### ComprehendPiiSyncSfnTask <a name="ComprehendPiiSyncSfnTask" id="amazon-textract-idp-cdk-constructs.ComprehendPiiSyncSfnTask"></a>
 
 Calls a Pii Comprehend Classification endpoint and parses the result, filters on > 50 % confidence and sets the highest confidence score classification.
@@ -6170,6 +6721,365 @@ how long can we wait for the process (default is 60 minutes).
 ---
 
 ##### `workflowTracingEnabled`<sup>Optional</sup> <a name="workflowTracingEnabled" id="amazon-textract-idp-cdk-constructs.ComprehendGenericSyncSfnTaskProps.property.workflowTracingEnabled"></a>
+
+```typescript
+public readonly workflowTracingEnabled: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+### ComprehendMedicalSyncSfnTaskProps <a name="ComprehendMedicalSyncSfnTaskProps" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps"></a>
+
+#### Initializer <a name="Initializer" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.Initializer"></a>
+
+```typescript
+import { ComprehendMedicalSyncSfnTaskProps } from 'amazon-textract-idp-cdk-constructs'
+
+const comprehendMedicalSyncSfnTaskProps: ComprehendMedicalSyncSfnTaskProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.comment">comment</a></code> | <code>string</code> | An optional description for this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.heartbeat">heartbeat</a></code> | <code>aws-cdk-lib.Duration</code> | Timeout for the heartbeat. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.inputPath">inputPath</a></code> | <code>string</code> | JSONPath expression to select part of the state to be the input to this state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.integrationPattern">integrationPattern</a></code> | <code>aws-cdk-lib.aws_stepfunctions.IntegrationPattern</code> | AWS Step Functions integrates with services directly in the Amazon States Language. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.outputPath">outputPath</a></code> | <code>string</code> | JSONPath expression to select select a portion of the state output to pass to the next state. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.resultPath">resultPath</a></code> | <code>string</code> | JSONPath expression to indicate where to inject the state's output. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.resultSelector">resultSelector</a></code> | <code>{[ key: string ]: any}</code> | The JSON that will replace the state's raw result and become the effective result before ResultPath is applied. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.timeout">timeout</a></code> | <code>aws-cdk-lib.Duration</code> | Timeout for the state machine. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.comprehendClassifierArn">comprehendClassifierArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.languageCode">languageCode</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.associateWithParent">associateWithParent</a></code> | <code>boolean</code> | Pass the execution ID from the context object to the execution input. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.input">input</a></code> | <code>aws-cdk-lib.aws_stepfunctions.TaskInput</code> | The JSON input for the execution, same as that of StartExecution. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.inputPolicyStatements">inputPolicyStatements</a></code> | <code>object</code> | List of PolicyStatements to attach to the Lambda function. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaLogLevel">lambdaLogLevel</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaMemory">lambdaMemory</a></code> | <code>number</code> | Memory allocated to Lambda function, default 512. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaTimeout">lambdaTimeout</a></code> | <code>number</code> | Lambda Function Timeout in seconds, default 300. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.name">name</a></code> | <code>string</code> | The name of the execution, same as that of StartExecution. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.outputPolicyStatements">outputPolicyStatements</a></code> | <code>object</code> | List of PolicyStatements to attach to the Lambda function. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3InputBucket">s3InputBucket</a></code> | <code>string</code> | location of input S3 objects - if left empty will generate rule for s3 access to all [*]. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3InputPrefix">s3InputPrefix</a></code> | <code>string</code> | prefix for input S3 objects - if left empty will generate rule for s3 access to all in bucket. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3OutputBucket">s3OutputBucket</a></code> | <code>string</code> | Bucket name to output data to. |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3OutputPrefix">s3OutputPrefix</a></code> | <code>string</code> | The prefix to use for the temporary output files (e.g. output from async process before stitching together). |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.textractStateMachineTimeoutMinutes">textractStateMachineTimeoutMinutes</a></code> | <code>number</code> | how long can we wait for the process (default is 60 minutes). |
+| <code><a href="#amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.workflowTracingEnabled">workflowTracingEnabled</a></code> | <code>boolean</code> | *No description.* |
+
+---
+
+##### `comment`<sup>Optional</sup> <a name="comment" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.comment"></a>
+
+```typescript
+public readonly comment: string;
+```
+
+- *Type:* string
+- *Default:* No comment
+
+An optional description for this state.
+
+---
+
+##### `heartbeat`<sup>Optional</sup> <a name="heartbeat" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.heartbeat"></a>
+
+```typescript
+public readonly heartbeat: Duration;
+```
+
+- *Type:* aws-cdk-lib.Duration
+- *Default:* None
+
+Timeout for the heartbeat.
+
+---
+
+##### `inputPath`<sup>Optional</sup> <a name="inputPath" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.inputPath"></a>
+
+```typescript
+public readonly inputPath: string;
+```
+
+- *Type:* string
+- *Default:* The entire task input (JSON path '$')
+
+JSONPath expression to select part of the state to be the input to this state.
+
+May also be the special value JsonPath.DISCARD, which will cause the effective
+input to be the empty object {}.
+
+---
+
+##### `integrationPattern`<sup>Optional</sup> <a name="integrationPattern" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.integrationPattern"></a>
+
+```typescript
+public readonly integrationPattern: IntegrationPattern;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.IntegrationPattern
+- *Default:* IntegrationPattern.REQUEST_RESPONSE
+
+AWS Step Functions integrates with services directly in the Amazon States Language.
+
+You can control these AWS services using service integration patterns
+
+> [https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token](https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html#connect-wait-token)
+
+---
+
+##### `outputPath`<sup>Optional</sup> <a name="outputPath" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.outputPath"></a>
+
+```typescript
+public readonly outputPath: string;
+```
+
+- *Type:* string
+- *Default:* The entire JSON node determined by the state input, the task result, and resultPath is passed to the next state (JSON path '$')
+
+JSONPath expression to select select a portion of the state output to pass to the next state.
+
+May also be the special value JsonPath.DISCARD, which will cause the effective
+output to be the empty object {}.
+
+---
+
+##### `resultPath`<sup>Optional</sup> <a name="resultPath" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.resultPath"></a>
+
+```typescript
+public readonly resultPath: string;
+```
+
+- *Type:* string
+- *Default:* Replaces the entire input with the result (JSON path '$')
+
+JSONPath expression to indicate where to inject the state's output.
+
+May also be the special value JsonPath.DISCARD, which will cause the state's
+input to become its output.
+
+---
+
+##### `resultSelector`<sup>Optional</sup> <a name="resultSelector" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.resultSelector"></a>
+
+```typescript
+public readonly resultSelector: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* None
+
+The JSON that will replace the state's raw result and become the effective result before ResultPath is applied.
+
+You can use ResultSelector to create a payload with values that are static
+or selected from the state's raw result.
+
+> [https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector](https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector)
+
+---
+
+##### `timeout`<sup>Optional</sup> <a name="timeout" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.timeout"></a>
+
+```typescript
+public readonly timeout: Duration;
+```
+
+- *Type:* aws-cdk-lib.Duration
+- *Default:* None
+
+Timeout for the state machine.
+
+---
+
+##### `comprehendClassifierArn`<sup>Required</sup> <a name="comprehendClassifierArn" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.comprehendClassifierArn"></a>
+
+```typescript
+public readonly comprehendClassifierArn: string;
+```
+
+- *Type:* string
+
+---
+
+##### `languageCode`<sup>Required</sup> <a name="languageCode" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.languageCode"></a>
+
+```typescript
+public readonly languageCode: string;
+```
+
+- *Type:* string
+
+---
+
+##### `associateWithParent`<sup>Optional</sup> <a name="associateWithParent" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.associateWithParent"></a>
+
+```typescript
+public readonly associateWithParent: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Pass the execution ID from the context object to the execution input.
+
+This allows the Step Functions UI to link child executions from parent executions, making it easier to trace execution flow across state machines.
+If you set this property to `true`, the `input` property must be an object (provided by `TaskInput.fromObject`) or omitted entirely.
+
+> [https://docs.aws.amazon.com/step-functions/latest/dg/concepts-nested-workflows.html#nested-execution-startid](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-nested-workflows.html#nested-execution-startid)
+
+---
+
+##### `input`<sup>Optional</sup> <a name="input" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.input"></a>
+
+```typescript
+public readonly input: TaskInput;
+```
+
+- *Type:* aws-cdk-lib.aws_stepfunctions.TaskInput
+- *Default:* The state input (JSON path '$')
+
+The JSON input for the execution, same as that of StartExecution.
+
+> [https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartExecution.html](https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartExecution.html)
+
+---
+
+##### `inputPolicyStatements`<sup>Optional</sup> <a name="inputPolicyStatements" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.inputPolicyStatements"></a>
+
+```typescript
+public readonly inputPolicyStatements: object;
+```
+
+- *Type:* object
+
+List of PolicyStatements to attach to the Lambda function.
+
+---
+
+##### `lambdaLogLevel`<sup>Optional</sup> <a name="lambdaLogLevel" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaLogLevel"></a>
+
+```typescript
+public readonly lambdaLogLevel: string;
+```
+
+- *Type:* string
+
+---
+
+##### `lambdaMemory`<sup>Optional</sup> <a name="lambdaMemory" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaMemory"></a>
+
+```typescript
+public readonly lambdaMemory: number;
+```
+
+- *Type:* number
+
+Memory allocated to Lambda function, default 512.
+
+---
+
+##### `lambdaTimeout`<sup>Optional</sup> <a name="lambdaTimeout" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.lambdaTimeout"></a>
+
+```typescript
+public readonly lambdaTimeout: number;
+```
+
+- *Type:* number
+
+Lambda Function Timeout in seconds, default 300.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* None
+
+The name of the execution, same as that of StartExecution.
+
+> [https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartExecution.html](https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartExecution.html)
+
+---
+
+##### `outputPolicyStatements`<sup>Optional</sup> <a name="outputPolicyStatements" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.outputPolicyStatements"></a>
+
+```typescript
+public readonly outputPolicyStatements: object;
+```
+
+- *Type:* object
+
+List of PolicyStatements to attach to the Lambda function.
+
+---
+
+##### `s3InputBucket`<sup>Optional</sup> <a name="s3InputBucket" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3InputBucket"></a>
+
+```typescript
+public readonly s3InputBucket: string;
+```
+
+- *Type:* string
+
+location of input S3 objects - if left empty will generate rule for s3 access to all [*].
+
+---
+
+##### `s3InputPrefix`<sup>Optional</sup> <a name="s3InputPrefix" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3InputPrefix"></a>
+
+```typescript
+public readonly s3InputPrefix: string;
+```
+
+- *Type:* string
+
+prefix for input S3 objects - if left empty will generate rule for s3 access to all in bucket.
+
+---
+
+##### `s3OutputBucket`<sup>Optional</sup> <a name="s3OutputBucket" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3OutputBucket"></a>
+
+```typescript
+public readonly s3OutputBucket: string;
+```
+
+- *Type:* string
+
+Bucket name to output data to.
+
+---
+
+##### `s3OutputPrefix`<sup>Optional</sup> <a name="s3OutputPrefix" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.s3OutputPrefix"></a>
+
+```typescript
+public readonly s3OutputPrefix: string;
+```
+
+- *Type:* string
+
+The prefix to use for the temporary output files (e.g. output from async process before stitching together).
+
+---
+
+##### `textractStateMachineTimeoutMinutes`<sup>Optional</sup> <a name="textractStateMachineTimeoutMinutes" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.textractStateMachineTimeoutMinutes"></a>
+
+```typescript
+public readonly textractStateMachineTimeoutMinutes: number;
+```
+
+- *Type:* number
+
+how long can we wait for the process (default is 60 minutes).
+
+---
+
+##### `workflowTracingEnabled`<sup>Optional</sup> <a name="workflowTracingEnabled" id="amazon-textract-idp-cdk-constructs.ComprehendMedicalSyncSfnTaskProps.property.workflowTracingEnabled"></a>
 
 ```typescript
 public readonly workflowTracingEnabled: boolean;
