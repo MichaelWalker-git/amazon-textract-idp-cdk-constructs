@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Duration } from 'aws-cdk-lib';
+import {Aws, Duration} from 'aws-cdk-lib';
 import { IRole, ManagedPolicy, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { CfnPermission, DockerImageFunction, Function } from 'aws-cdk-lib/aws-lambda';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
@@ -36,7 +36,7 @@ export class WorkmailS3IngestionPoint extends Construct {
     this.s3OutputBucket = props.s3OutputBucket;
     this.s3OutputPrefix = props.s3OutputPrefix;
 
-    const WorkMailARN = `arn:aws:workmailmessageflow:${this.workmailRegion}:${this.workmailAccountNumber}:message/*/*/*`;
+    const WorkMailARN = `arn:${Aws.PARTITION}:workmailmessageflow:${this.workmailRegion}:${this.workmailAccountNumber}:message/*/*/*`;
 
     const lambdaMemoryMB = props?.lambdaMemoryMB === undefined ? 10240 : props.lambdaMemoryMB;
     const lambdaTimeout = props?.lambdaTimeout === undefined ? 900 : props.lambdaTimeout;
@@ -49,8 +49,8 @@ export class WorkmailS3IngestionPoint extends Construct {
         }),
         new PolicyStatement({
           resources: [
-            path.join(`arn:aws:s3:::${this.s3OutputBucket}`, '/*'),
-            path.join(`arn:aws:s3:::${this.s3OutputBucket}`, this.s3OutputPrefix, '/*'),
+            path.join(`arn:${Aws.PARTITION}:s3:::${this.s3OutputBucket}`, '/*'),
+            path.join(`arn:${Aws.PARTITION}:s3:::${this.s3OutputBucket}`, this.s3OutputPrefix, '/*'),
           ],
           actions: [
             's3:Object',

@@ -231,8 +231,8 @@ export class TextractGenericSyncSfnTask extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:GetObject', 's3:ListBucket'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );
@@ -257,8 +257,8 @@ export class TextractGenericSyncSfnTask extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:PutObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/*'),
             ],
           }),
         );

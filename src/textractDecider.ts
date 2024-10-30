@@ -1,9 +1,9 @@
 import * as path from 'path';
-import { Duration } from 'aws-cdk-lib';
+import { Aws, Duration } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import { INextable, State, StateMachineFragment } from 'aws-cdk-lib/aws-stepfunctions';
 import * as tasks from 'aws-cdk-lib/aws-stepfunctions-tasks';
-import { INextable, State, StateMachineFragment, Timeout } from 'aws-cdk-lib/aws-stepfunctions';
 import { Construct } from 'constructs';
 
 export interface TextractDPPOCDeciderProps {
@@ -106,12 +106,12 @@ export class TextractPOCDecider extends StateMachineFragment {
             actions: ['s3:GetObject', 's3:ListBucket'],
             resources: [
               path.join(
-                `arn:aws:s3:::${props.s3InputBucket}`,
+                `arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`,
                 s3InputPrefix,
                 '/',
               ),
               path.join(
-                `arn:aws:s3:::${props.s3InputBucket}`,
+                `arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`,
                 s3InputPrefix,
                 '/*',
               ),

@@ -69,8 +69,8 @@ export class SearchablePDF extends sfn.StateMachineFragment {
           new iam.PolicyStatement({
             actions: ['s3:GetObject', 's3:ListBucket', 's3:PutObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3TextractOutputBucket}`, s3InputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3TextractOutputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3TextractOutputBucket}`, s3InputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3TextractOutputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Duration } from 'aws-cdk-lib';
+import {Aws, Duration} from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sfn from 'aws-cdk-lib/aws-stepfunctions';
@@ -84,8 +84,8 @@ export class TextractPdfMapperForFhir extends sfn.StateMachineFragment {
           new iam.PolicyStatement({
             actions: ['s3:GetObject', 's3:ListBucket'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );

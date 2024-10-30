@@ -211,7 +211,7 @@ export class TextractGenerateCSV extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:GetObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );
@@ -219,7 +219,7 @@ export class TextractGenerateCSV extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:ListBucket'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`),
             ],
           }),
         );
@@ -243,8 +243,8 @@ export class TextractGenerateCSV extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:PutObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.csvS3OutputBucket}`, s3TempOutputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.csvS3OutputBucket}`, s3TempOutputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.csvS3OutputBucket}`, s3TempOutputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.csvS3OutputBucket}`, s3TempOutputPrefix, '/*'),
             ],
           }),
         );

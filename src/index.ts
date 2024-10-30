@@ -232,19 +232,20 @@ export class TextractGenericAsyncSfnTask extends sfn.TaskStateBase {
       throw new Error('Could not enable `associateWithParent` because `input` is taken directly from a JSON path. Use `sfn.TaskInput.fromObject` instead.');
     }
 
-    var textractStateMachineTimeoutMinutes = props.textractStateMachineTimeoutMinutes === undefined ? 2880 : props.textractStateMachineTimeoutMinutes;
-    var lambdaLogLevel = props.lambdaLogLevel === undefined ? 'INFO' : props.lambdaLogLevel;
-    var textractAPI = props.textractAPI === undefined ? 'GENERIC' : props.textractAPI;
-    var textractAsyncCallMaxRetries = props.textractAsyncCallMaxRetries === undefined ? 100 : props.textractAsyncCallMaxRetries;
-    var textractAsyncCallBackoffRate = props.textractAsyncCallBackoffRate === undefined ? 1.1 : props.textractAsyncCallBackoffRate;
-    var lambdaTimeout = props.lambdaTimeout === undefined ? 300 : props.lambdaTimeout;
-    var lambdaMemory = props.lambdaMemory === undefined ? 512 : props.lambdaMemory;
-    var textractAsyncCallInterval = props.textractAsyncCallInterval === undefined ? 1 : props.textractAsyncCallInterval;
-    var s3TempOutputPrefix =
-      props.s3TempOutputPrefix === undefined ? '' : props.s3TempOutputPrefix;
-    var s3InputPrefix =
-      props.s3InputPrefix === undefined ? '' : props.s3InputPrefix;
-    var enableCloudWatchMetricsAndDashboard = props.enableCloudWatchMetricsAndDashboard === undefined ? false :
+    const textractStateMachineTimeoutMinutes = props.textractStateMachineTimeoutMinutes === undefined ?
+      2880 : props.textractStateMachineTimeoutMinutes;
+    const lambdaLogLevel = props.lambdaLogLevel === undefined ? 'INFO' : props.lambdaLogLevel;
+    const textractAPI = props.textractAPI === undefined ? 'GENERIC' : props.textractAPI;
+    const textractAsyncCallMaxRetries = props.textractAsyncCallMaxRetries === undefined ? 100 : props.textractAsyncCallMaxRetries;
+    const textractAsyncCallBackoffRate = props.textractAsyncCallBackoffRate === undefined ? 1.1 : props.textractAsyncCallBackoffRate;
+    const lambdaTimeout = props.lambdaTimeout === undefined ? 300 : props.lambdaTimeout;
+    const lambdaMemory = props.lambdaMemory === undefined ? 512 : props.lambdaMemory;
+    const textractAsyncCallInterval = props.textractAsyncCallInterval === undefined ? 1 : props.textractAsyncCallInterval;
+    const s3TempOutputPrefix =
+        props.s3TempOutputPrefix === undefined ? '' : props.s3TempOutputPrefix;
+    const s3InputPrefix =
+        props.s3InputPrefix === undefined ? '' : props.s3InputPrefix;
+    const enableCloudWatchMetricsAndDashboard = props.enableCloudWatchMetricsAndDashboard === undefined ? false :
       props.enableCloudWatchMetricsAndDashboard;
 
     /** RESOURCE DYNAMODB TABLE for TASK TOKEN */
@@ -324,8 +325,8 @@ export class TextractGenericAsyncSfnTask extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:GetObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, '/*'),
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );
@@ -333,13 +334,13 @@ export class TextractGenericAsyncSfnTask extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:ListBucket'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`),
             ],
           }),
         );
       }
     } else {
-      for (var policyStatement of props.inputPolicyStatements) {
+      for (let policyStatement of props.inputPolicyStatements) {
         this.textractAsyncCallFunction.addToRolePolicy(policyStatement);
       }
     }
@@ -357,14 +358,14 @@ export class TextractGenericAsyncSfnTask extends sfn.TaskStateBase {
           new iam.PolicyStatement({
             actions: ['s3:PutObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3TempOutputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3TempOutputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3TempOutputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3TempOutputPrefix, '/*'),
             ],
           }),
         );
       }
     } else {
-      for (var policyStatement of props.outputPolicyStatements) {
+      for (let policyStatement of props.outputPolicyStatements) {
         this.textractAsyncCallFunction.addToRolePolicy(policyStatement);
       }
     }

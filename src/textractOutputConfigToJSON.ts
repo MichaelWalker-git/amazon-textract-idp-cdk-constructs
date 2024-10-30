@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Duration } from 'aws-cdk-lib';
+import { Aws, Duration } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sfn from 'aws-cdk-lib/aws-stepfunctions';
@@ -68,19 +68,19 @@ export class TextractAsyncToJSON extends sfn.StateMachineFragment {
   constructor(parent : Construct, id : string, props : TextractAsyncToJSONProps) {
     super(parent, id);
 
-    var lambdaLogLevel = props.lambdaLogLevel === undefined ? 'DEBUG' : props.lambdaLogLevel;
-    var lambdaTimeout = props.lambdaTimeout === undefined ? 900 : props.lambdaTimeout;
-    var lambdaMemoryMB = props.lambdaMemoryMB === undefined ? 10240 : props.lambdaMemoryMB;
-    var textractAPI = props.textractAPI === undefined ? 'GENERIC' : props.textractAPI;
+    const lambdaLogLevel = props.lambdaLogLevel === undefined ? 'DEBUG' : props.lambdaLogLevel;
+    const lambdaTimeout = props.lambdaTimeout === undefined ? 900 : props.lambdaTimeout;
+    const lambdaMemoryMB = props.lambdaMemoryMB === undefined ? 10240 : props.lambdaMemoryMB;
+    const textractAPI = props.textractAPI === undefined ? 'GENERIC' : props.textractAPI;
 
-    var s3OutputPrefix =
-      props.s3OutputPrefix === undefined ? '' : props.s3OutputPrefix;
-    var s3InputPrefix =
-      props.s3InputPrefix === undefined ? '' : props.s3InputPrefix;
-    var textractAsyncToJSONMaxRetries = props.textractAsyncToJSONMaxRetries === undefined ? 100 : props.textractAsyncToJSONMaxRetries;
-    var textractAsyncToJSONBackoffRate =
-      props.textractAsyncToJSONBackoffRate === undefined ? 1.1 : props.textractAsyncToJSONBackoffRate;
-    var textractAsyncToJSONInterval = props.textractAsyncToJSONInterval === undefined ? 1 : props.textractAsyncToJSONInterval;
+    const s3OutputPrefix =
+        props.s3OutputPrefix === undefined ? '' : props.s3OutputPrefix;
+    const s3InputPrefix =
+        props.s3InputPrefix === undefined ? '' : props.s3InputPrefix;
+    const textractAsyncToJSONMaxRetries = props.textractAsyncToJSONMaxRetries === undefined ? 100 : props.textractAsyncToJSONMaxRetries;
+    const textractAsyncToJSONBackoffRate =
+        props.textractAsyncToJSONBackoffRate === undefined ? 1.1 : props.textractAsyncToJSONBackoffRate;
+    const textractAsyncToJSONInterval = props.textractAsyncToJSONInterval === undefined ? 1 : props.textractAsyncToJSONInterval;
 
 
     this.asyncToJSONFunction = new lambda.DockerImageFunction(this, 'TextractAsyncToJSON', {
@@ -109,7 +109,7 @@ export class TextractAsyncToJSON extends sfn.StateMachineFragment {
           new iam.PolicyStatement({
             actions: ['s3:GetObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`, s3InputPrefix, '/*'),
             ],
           }),
         );
@@ -117,7 +117,7 @@ export class TextractAsyncToJSON extends sfn.StateMachineFragment {
           new iam.PolicyStatement({
             actions: ['s3:ListBucket'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3InputBucket}`),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3InputBucket}`),
             ],
           }),
         );
@@ -141,8 +141,8 @@ export class TextractAsyncToJSON extends sfn.StateMachineFragment {
           new iam.PolicyStatement({
             actions: ['s3:PutObject'],
             resources: [
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/'),
-              path.join(`arn:aws:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/*'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/'),
+              path.join(`arn:${Aws.PARTITION}:s3:::${props.s3OutputBucket}`, s3OutputPrefix, '/*'),
             ],
           }),
         );
