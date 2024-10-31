@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {Aws, Duration} from 'aws-cdk-lib';
+import { Aws, Duration } from 'aws-cdk-lib';
 import { IRole, ManagedPolicy, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { CfnPermission, DockerImageFunction, Function } from 'aws-cdk-lib/aws-lambda';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
