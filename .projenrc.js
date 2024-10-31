@@ -23,6 +23,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
       { run: 'cd .repo && yarn install --check-files --frozen-lockfile' },
       { run: 'python -m pip install --upgrade pip' },
       { run: 'pip install --upgrade setuptools' },
+      { run: 'ls -R .repo' },
+      { run: 'cd .repo && npx projen --help' },
       { run: 'cd .repo && npx projen package:python' },
       { run: 'mv .repo/dist dist' },
     ],
